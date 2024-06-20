@@ -5,39 +5,133 @@
 
 ## API Endpoints
 
-Users
-/user/login: POST - Authenticate user and start session.
-/user/logout: POST - End user session.
-/user/signup: POST - Register a new user.
-/user/editDetails: PUT - Edit user details.
-/user/getDetails: GET - Fetch details of the logged-in user.
-/user/changePassword: PUT - Change user password.
-/user/forgotPassword: POST - Initiate password recovery.
-Bookings
-/bookings/getBookingsOfUser: GET - Retrieve bookings for a specific user.
-/bookings/getBookingsOfBus: GET - Retrieve bookings for a specific bus.
-/bookings/postBooking: POST - Create a new booking.
-/bookings/calculateCost: POST - Calculate the cost of a booking.
-/bookings/cancelBooking: DELETE - Cancel a booking.
-/bookings/getBookingDetails/{bookingId}: GET - Fetch details of a specific booking.
-/bookings/updateBooking: PUT - Update booking details.
-/bookings/getBookingStatus/{bookingId}: GET - Check the status of a booking.
-Buses
-/bus/getSeats: GET - Retrieve available seats for a specific bus.
-/bus/getBuses/{query=from,to,date}: GET - Retrieve buses based on query parameters.
-/bus/filterBuses/{query}: GET - Filter buses based on criteria.
-/bus/postRating: POST - Submit a rating for a bus.
-/bus/postBusPhotos: POST - Upload photos of a bus.
-/bus/postBus: POST - Add a new bus to the system.
-/bus/deleteBus: DELETE - Remove a bus from the system.
-/bus/editBus: PUT - Edit bus details.
-/bus/getBusDetails/{busId}: GET - Fetch detailed information about a specific bus.
-/bus/getBusRatings/{busId}: GET - Retrieve ratings and reviews for a specific bus.
-/bus/updateBusStatus: PUT - Update the current status of a bus.
-Operators
-/operators/postOperator: POST - Add a new bus operator.
-/operators/getOperators: GET - Retrieve a list of bus operators.
-/operators/getOperatorDetails/{operatorId}: GET - Fetch detailed information about a specific operator.
-/operators/updateOperator: PUT - Update operator details.
+## Users
+
+### Authenticate User
+- **Endpoint:** `/user/login`
+- **Method:** POST
+- **Description:** Authenticate user and start session.
+
+### Logout User
+- **Endpoint:** `/user/logout`
+- **Method:** POST
+- **Description:** End user session.
+
+### Register User
+- **Endpoint:** `/user/signup`
+- **Method:** POST
+- **Description:** Register a new user.
+
+### Edit User Details
+- **Endpoint:** `/user/editDetails`
+- **Method:** PUT
+- **Description:** Edit user details.
+
+### Fetch User Details
+- **Endpoint:** `/user/getDetails`
+- **Method:** GET
+- **Description:** Fetch details of the logged-in user.
+
+## Bookings
+
+### Retrieve User Bookings
+- **Endpoint:** `/bookings/getBookingsOfUser`
+- **Method:** GET
+- **Description:** Retrieve bookings for a specific user.
+
+### Retrieve Bus Bookings
+- **Endpoint:** `/bookings/getBookingsOfBus`
+- **Method:** GET
+- **Description:** Retrieve bookings for a specific bus.
+
+### Create Booking
+- **Endpoint:** `/bookings/postBooking`
+- **Method:** POST
+- **Description:** Create a new booking.
+
+### Calculate Booking Cost
+- **Endpoint:** `/bookings/calculateCost`
+- **Method:** POST
+- **Description:** Calculate the cost of a booking.
+
+### Cancel Booking
+- **Endpoint:** `/bookings/cancelBooking`
+- **Method:** DELETE
+- **Description:** Cancel a booking.
+
+### Fetch Booking Details
+- **Endpoint:** `/bookings/getBookingDetails/{bookingId}`
+- **Method:** GET
+- **Description:** Fetch details of a specific booking.
+
+### Update Booking
+- **Endpoint:** `/bookings/updateBooking`
+- **Method:** PUT
+- **Description:** Update booking details.
+
+## Buses
+
+### Retrieve Available Seats
+- **Endpoint:** `/bus/getSeats`
+- **Method:** GET
+- **Description:** Retrieve available seats for a specific bus.
+
+### Retrieve Buses
+- **Endpoint:** `/bus/getBuses/{query=from,to,date}`
+- **Method:** GET
+- **Description:** Retrieve buses based on query parameters.
+
+### Filter Buses
+- **Endpoint:** `/bus/filterBuses/{query}`
+- **Method:** GET
+- **Description:** Filter buses based on criteria.
+
+### Add New Bus
+- **Endpoint:** `/bus/postBus`
+- **Method:** POST
+- **Description:** Add a new bus to the system.
+
+### Upload Bus Photos
+- **Endpoint:** `/bus/postBusPhotos`
+- **Method:** POST
+- **Description:** Upload photos of a bus.
+
+### Remove Bus
+- **Endpoint:** `/bus/deleteBus`
+- **Method:** DELETE
+- **Description:** Remove a bus from the system.
+
+### Edit Bus Details
+- **Endpoint:** `/bus/editBus`
+- **Method:** PUT
+- **Description:** Edit bus details.
+
+### Fetch Bus Details
+- **Endpoint:** `/bus/getBusDetails/{busId}`
+- **Method:** GET
+- **Description:** Fetch detailed information about a specific bus.
+
+## Operators
+
+### Add New Operator
+- **Endpoint:** `/operators/postOperator`
+- **Method:** POST
+- **Description:** Add a new bus operator.
+
+### Retrieve Operators
+- **Endpoint:** `/operators/getOperators`
+- **Method:** GET
+- **Description:** Retrieve a list of bus operators.
+
+### Fetch Operator Details
+- **Endpoint:** `/operators/getOperatorDetails/{operatorId}`
+- **Method:** GET
+- **Description:** Fetch detailed information about a specific operator.
+
+### Update Operator Details
+- **Endpoint:** `/operators/updateOperator`
+- **Method:** PUT
+- **Description:** Update operator details.
+
 
 
