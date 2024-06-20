@@ -1,5 +1,4 @@
 # JetBus
 
 ## Schema Design
-
-<div style="width: 640px; height: 480px; margin: 10px; position: relative;"><iframe allowfullscreen frameborder="0" style="width:640px; height:480px" src="https://lucid.app/documents/embedded/9a48a753-7bea-49bb-a4fe-270b80fc3e69" id="2nZMV0oo~mj."></iframe></div>
+![image](https://github.com/lathika-sunder/jetbus-server/assets/95066409/c4b99761-fa62-425c-8753-9ac75089e55f)
