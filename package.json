@@ -1,0 +1,11 @@
+{
+  "name": "jetbus-server",
+  "version": "1.0.0",
+  "description": "![image](https://github.com/lathika-sunder/jetbus-server/assets/95066409/220c49cb-0850-4a6a-88ad-076ad1a48a41)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
