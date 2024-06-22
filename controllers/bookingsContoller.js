@@ -95,4 +95,13 @@ const calculateBookingCost = async (request, response) => {
     }
 };
 
+const cancelBooking=async(request,response)=>{
+    const bookingId=request.params
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
 module.exports = { postBooking, getBookingsOfUser, getBookingDetails, calculateBookingCost }
