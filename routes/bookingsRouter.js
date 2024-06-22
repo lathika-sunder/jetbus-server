@@ -5,7 +5,7 @@ const router=express.Router()
 
 router.get('/getBookingsOfUser')
 router.get('/getBookingDetails/:bookingId')
-router.get('/getBookingsOfBus')
+router.get('/getBookingsOfBus/:busId')
 router.post('/postBooking',verifyToken,postBooking)
 router.get('/calculateBookingCost')
 router.delete('/cancelBoking')

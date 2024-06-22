@@ -76,33 +76,22 @@ const getSeats = async (request, response) => {
     }
 };
 
-const filterBuses = async (request, response) => {
 
-    const buses = Bus.find()
+
+const getBusDetails =async (request,response) => {
+    const busId=request.params.busId
+
     try {
-        const result = bu
+        const bus=await Bus.findById(busId)
+        response.status(200).json(bus)
     } catch (error) {
-
+        response.status(500).json({message:"Error getting Bus Details",error:error.message})
     }
-
-}
-
-const editBus = () => {
-
-}
-const deleteBus = () => {
-
-}
-const getBusDetails = () => {
-
 }
 
 module.exports = {
     getBuses,
     getSeats,
     postBus,
-    editBus,
-    deleteBus,
-    getBusDetails,
-    filterBuses
+    getBusDetails
 }
