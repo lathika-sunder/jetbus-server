@@ -15,24 +15,43 @@ const getUsers = (request, response) => {
 
 const signupUser = async (request, response) => {
     const {
-        name, email, phone, password, role
+        userName, gender,email, phone, password
     } = request.body;
-    const hashedPassword = hashPassword(password)
+
+    // Validate request body
+    if (!userName || !gender || !email || !phone || !password) {
+        return response.status(400).json({ message: "All fields are required" });
+    }
+
+
+    const hashedPassword =await hashPassword(password)
+
     const user = {
-        name, email, phone, hashedPassword, role
+        userName, gender,email, phone, password:hashedPassword
     }
     try {
+        const existingUser=await User.findOne({email})
+        if(existingUser)
+        {
+            return response.status(409).json({message:"User already existing"})
+        }
+
         await User.create(user)
         response.status(200).json("Sign Up Successful")
     } catch (error) {
-        console.log("Error Signing Up User", error)
+        if (error.code === 'ECONNRESET') {
+            response.status(503).json({ message: "Service Unavailable. Please try again later." });
+        } else {
+            response.status(500).json({ message: "Internal Server Error",error:error });
+        }
+    
     }
 
 }
 
 const loginUser = async (request, response) => {
     const { email, password } = request.body
-    const user = { email, password }
+    
 
     try {
         const userToBeLogged = await User.findOne(email)
@@ -51,6 +70,7 @@ const loginUser = async (request, response) => {
             sameSite: 'None'
         }
         response.cookie('SessionID', token, options)
+
         response.status(201).json({ message: "Login Successful", token: token })
 
     } catch (error) {
@@ -58,8 +78,20 @@ const loginUser = async (request, response) => {
     }
 
 }
-const logoutUser = (request, response) => {
+const logoutUser = async(request, response) => {
+try {
+    const authHeader=request.headers['cookie']
+    if(!authHeader)
+        {
+            //No cookie provided
+            return response.status(204).json({message:"No Cookie Provided"})
 
+        }
+        const cookie=authHeader.split('=')[1]
+    
+} catch (error) {
+    
+}
 }
 
 const editUserDetails = (request, response) => {
