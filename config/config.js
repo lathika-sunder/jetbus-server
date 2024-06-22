@@ -8,6 +8,9 @@ const configuration={
     }
     ,db:{
         uri:process.env.DB_URI,
+    },
+    jwt:{
+        secret_key:process.env.JWT_SECRET_KEY
     }
 }
 module.exports=configuration
