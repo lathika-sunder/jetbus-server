@@ -44,4 +44,18 @@ const getBookingsOfUser=async(request,response)=>{
         response.status(500).json({message:"Internal Server Error",error:error.message})
     }
 }
-module.exports = {postBooking,getBookingsOfUser}
+
+const getBookingDetails=async(request,response)=>{
+    const bookingId=request.params.bookingId
+    try {
+        const booking=await Booking.findById(bookingId)
+        if (!booking) {
+            return response.status(404).json({ message: "Booking not found" });
+        }
+        response.status(200).json(booking)
+    } catch (error) {
+        response.status(500).json({message:"Internal Server Error",error:error.message})
+        
+    }
+}
+module.exports = {postBooking,getBookingsOfUser,getBookingDetails}
