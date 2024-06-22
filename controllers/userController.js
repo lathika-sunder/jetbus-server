@@ -116,11 +116,18 @@ const logoutUser = async (request, response) => {
 }
 
 const editUserDetails = (request, response) => {
-    
+
 
 }
-const getUserDetails = (request, response) => {
-
+const getUserDetails = async(request, response) => {
+    const id=request.user._id
+    console.log(id)
+    try {
+       const user=await User.findById(id) 
+       return response.status(200).json({message:"Get USer Details Successful", user:user})
+    } catch (error) {
+        response.status(500).json({message:"Internal Server Error",error:error})
+    }
 }
 
 module.exports = { getUsers, signupUser, loginUser, logoutUser, editUserDetails, getUserDetails } 
