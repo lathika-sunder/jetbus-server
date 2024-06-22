@@ -3,6 +3,7 @@ const User = require('../models/userModel')
 const generateToken = require('../utils/generateAccessToken')
 const hashPassword = require('../utils/hashPassword')
 const validatePassword = require('../utils/validatePassword')
+const BlackList = require('../models/blackListModel')
 
 
 
@@ -16,7 +17,7 @@ const getUsers = (request, response) => {
 
 const signupUser = async (request, response) => {
     const {
-        userName, gender,email, phone, password
+        userName, gender, email, phone, password
     } = request.body;
 
     // Validate request body
@@ -25,16 +26,15 @@ const signupUser = async (request, response) => {
     }
 
 
-    const hashedPassword =await hashPassword(password)
+    const hashedPassword = await hashPassword(password)
 
     const user = {
-        userName, gender,email, phone, password:hashedPassword
+        userName, gender, email, phone, password: hashedPassword
     }
     try {
-        const existingUser=await User.findOne({email})
-        if(existingUser)
-        {
-            return response.status(409).json({message:"User already existing"})
+        const existingUser = await User.findOne({ email })
+        if (existingUser) {
+            return response.status(409).json({ message: "User already existing" })
         }
 
         await User.create(user)
@@ -43,34 +43,33 @@ const signupUser = async (request, response) => {
         if (error.code === 'ECONNRESET') {
             response.status(503).json({ message: "Service Unavailable. Please try again later." });
         } else {
-            response.status(500).json({ message: "Internal Server Error",error:error });
+            response.status(500).json({ message: "Internal Server Error", error: error });
         }
-    
+
     }
 
 }
 
 const loginUser = async (request, response) => {
     const { email, password } = request.body
-    
+
     try {
-        const userToBeLogged = await User.findOne({email})
-        
+        const userToBeLogged = await User.findOne({ email })
+
         if (!userToBeLogged) {
             return response.status(401).json({ message: "User not found" })
         }
-        const isValidPassword=await validatePassword(password, userToBeLogged.password)
-        
+        const isValidPassword = await validatePassword(password, userToBeLogged.password)
+
         if (!isValidPassword) {
             return response.status(404).json({ message: "Login Failed, Invalid Password" })
         }
-        
-        
+
+
         //cookie generation
-        
-        const token =generateToken(userToBeLogged._id, email)
-        
-        console.log({email,password})
+
+        const token = generateToken(userToBeLogged._id, email)
+
         const options = {
             maxAge: 20 * 60 * 1000,
             httpOnly: true,
@@ -81,24 +80,39 @@ const loginUser = async (request, response) => {
         response.status(201).json({ message: "Login Successful", token: token })
 
     } catch (error) {
-        response.status(500).json({ message: "Internal Server Error", error:error})
+        response.status(500).json({ message: "Internal Server Error", error: error })
     }
 
 }
-const logoutUser = async(request, response) => {
-try {
-    const authHeader=request.headers['cookie']
-    if(!authHeader)
-        {
+const logoutUser = async (request, response) => {
+    try {
+        const authHeader = request.headers['cookie']
+        if (!authHeader) {
             //No cookie provided
-            return response.status(204).json({message:"No Cookie Provided"})
+            return response.status(204).json({ message: "No Cookie Provided" })
 
         }
-        const cookie=authHeader.split('=')[1]
-    
-} catch (error) {
-    
-}
+
+        const cookie = authHeader.split('=')[1]//extract cookie value
+        const token = cookie.split(';')[0]//token is the first value in a cookie
+
+        const isBlackListed = await BlackList.findOne({ token: token })
+
+        if (isBlackListed) {
+            //No acton required already blacklisted
+            return response.status(204).json({ message: "No Content" })
+        }
+        const newBlackList = new BlackList({ token: token })
+        await newBlackList.save()
+
+        //browser should clear the cookie header
+        response.setHeader('Clear-Site-Data', '"cookies"')
+
+        response.status(200).json({ message: "Log Out Successful" })
+
+    } catch (error) {
+        response.status(500).json({ message: "Iternal Server Error", error: error })
+    }
 }
 
 const editUserDetails = (request, response) => {

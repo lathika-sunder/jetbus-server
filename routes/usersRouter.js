@@ -4,7 +4,7 @@ const { getUsers,signupUser,loginUser,logoutUser,editUserDetails,getUserDetails 
 
 router.get("/getUsers", getUsers)
 router.post("/login",loginUser)
-router.post('/logout',logoutUser)
+router.get('/logout',logoutUser)
 router.post('/signup',signupUser)
 router.post('/editUserDetails',editUserDetails)
 router.post('/getUserDetails/:userId',getUserDetails)

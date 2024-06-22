@@ -13,4 +13,5 @@ const blackListSchema=new Schema({
     timestamps:true
 })
 
-module.exports=mongoose.model('BlackList',blackListSchema)
+const BlackList=mongoose.model('BlackList',blackListSchema)
+module.exports=BlackList
