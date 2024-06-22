@@ -8,7 +8,6 @@ const busSchema = new Schema({
     },
     departure: String,
     arrival: String,
-    ratings: Number,
     price: Number, 
     busType: {
         type: String,
