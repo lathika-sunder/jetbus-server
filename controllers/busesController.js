@@ -34,11 +34,22 @@ const postBus = async (request, response) => {
 
 }
 const getBuses = async (request, response) => {
+    const { arrival, departure } = request.body
+    
     try {
-        const buses = await Bus.find()
-        response.status(200).json(buses)
+        const result = await Bus.find({
+            $or: [
+                { departure: departure },
+                { busPoints: { $in: [departure] } }
+            ],
+            $or: [
+                { arrival:arrival },
+                { busPoints: { $in: [arrival] } }
+            ]
+        });
+        response.status(200).json(result)
     } catch (error) {
-        response.status(500).json({ message: "Error getting Buses", error: error })
+        response.status(500).json({ message: "Error getting Buses", error: error.message })
     }
 }
 const getSeats = async (request, response) => {
@@ -46,8 +57,8 @@ const getSeats = async (request, response) => {
     const seats = ["L1", "L2", "L3", "L4", "L5", "L6", "L7", "L8", "L9", "L10", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "U9", "U10"];
 
     try {
-        const bookedSeats = await Booking.find({  date:date ,busId:busId});
-  
+        const bookedSeats = await Booking.find({ date: date, busId: busId });
+
         if (bookedSeats.length === 0) {
             return response.status(404).json({ message: "No Bookings Found" });
         }
@@ -61,12 +72,18 @@ const getSeats = async (request, response) => {
 
         response.status(200).json(seatsResult);
     } catch (error) {
-        response.status(500).json({ message: "Internal Server Error", error:error.message });
+        response.status(500).json({ message: "Internal Server Error", error: error.message });
     }
 };
 
-const filterBuses = () => {
+const filterBuses = async (request, response) => {
 
+    const buses = Bus.find()
+    try {
+        const result = bu
+    } catch (error) {
+
+    }
 
 }
 
