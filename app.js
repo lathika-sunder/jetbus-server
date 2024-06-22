@@ -34,7 +34,8 @@ const operatorsRouter=require('./routes/operatorsRouter')
 app.use('/api/v1/jetbus/operator',operatorsRouter)
 
 
-
+//cron initiated bookings
+const cronInitiatedBookings=require('./services/deleteOrders')
 
 app.listen(config.app.port,(request,response)=>{
     console.log(`App listening on http://localhost:${config.app.port}`)

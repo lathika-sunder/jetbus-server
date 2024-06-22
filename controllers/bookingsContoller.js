@@ -1,4 +1,8 @@
 const Booking = require("../models/bookingModel");
+const cron=require('node-cron')
+
+
+
 
 const postBooking = async (request, response) => {
     const userId=request.user._id;
@@ -31,4 +35,13 @@ const postBooking = async (request, response) => {
     }
 }
 
-module.exports = {postBooking}
+const getBookingsOfUser=async(request,response)=>{
+    const userId=request.user._id
+    try {
+        const bookingsOfUser=await Booking.find({userId:userId})
+        response.status(200).json(bookingsOfUser)
+    } catch (error) {
+        response.status(500).json({message:"Internal Server Error",error:error.message})
+    }
+}
+module.exports = {postBooking,getBookingsOfUser}
