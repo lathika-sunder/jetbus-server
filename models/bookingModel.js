@@ -20,7 +20,7 @@ const bookingSchema=new Schema({
     }],
     paymentStatus:{
         type:String,
-        enum:["notPaid","initiated","completed"],
+        enum:["initiated","completed"],
     },
     busId:{
         type:Schema.Types.ObjectId,

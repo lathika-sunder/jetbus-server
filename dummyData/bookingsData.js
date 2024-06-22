@@ -14,9 +14,8 @@ module.exports=[    {
         seats: ['U1', 'U2'],
         date: new Date('2024-06-26'),
         passengers: ['60d1ed8744a6f32acc7b1b5c', '60d1ed8744a6f32acc7b1b5d'],
-        paymentStatus: 'notPaid',
-        busId: '60d1ed8744a6f32acc7b1b5f',
-        userId: '60d1ed8744a6f32acc7b1b60'
+       
+       
     },
     {
         boardingPoint: 'Hebbal',

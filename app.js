@@ -28,10 +28,10 @@ const busesRouter=require('./routes/busesRouter')
 app.use('/api/v1/jetbus/bus',busesRouter)
 
 const bookingsRouter=require('./routes/bookingsRouter')
-app.use('/api/v1/jetbus/bookings',bookingsRouter)
+app.use('/api/v1/jetbus/booking',bookingsRouter)
 
 const operatorsRouter=require('./routes/operatorsRouter')
-app.use('/api/v1/jetbus/operators',operatorsRouter)
+app.use('/api/v1/jetbus/operator',operatorsRouter)
 
 
 
