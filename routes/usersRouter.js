@@ -7,8 +7,7 @@ router.get("/getUsers", getUsers)
 router.post("/login",loginUser)
 router.get('/logout',verifyToken,logoutUser)
 router.post('/signup',signupUser)
-
-router.post('/editUserDetails',editUserDetails)
+router.put('/editUserDetails/:userId',verifyToken,editUserDetails)
 router.get('/getUserDetails/:userId',verifyToken,getUserDetails)
 
 module.exports = router

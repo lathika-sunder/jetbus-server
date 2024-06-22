@@ -115,13 +115,33 @@ const logoutUser = async (request, response) => {
     }
 }
 
-const editUserDetails = (request, response) => {
+const editUserDetails = async(request, response) => {
+    const id=request.user._id
+    try {
+        const user=await User.findById(id)
+        if (request.body.userName) {
+            user.userName = request.body.userName;
+        }
+        if (request.body.gender) {
+            user.gender = request.body.gender;
+        }
+        if (request.body.email) {
+            user.email = request.body.email;
+        }
+        if (request.body.phone) {
+            user.phone = request.body.phone;
+        }
 
+        await user.save()
+        response.status(200).json({message:"Edit Details Successful",user:user})
+    } catch (error) {
+        response.status(500).json({message:"Internal Server Error",error:error})
+    }
 
 }
 const getUserDetails = async(request, response) => {
     const id=request.user._id
-    console.log(id)
+   
     try {
        const user=await User.findById(id) 
        return response.status(200).json({message:"Get USer Details Successful", user:user})
