@@ -116,6 +116,7 @@ const logoutUser = async (request, response) => {
 }
 
 const editUserDetails = (request, response) => {
+    
 
 }
 const getUserDetails = (request, response) => {
