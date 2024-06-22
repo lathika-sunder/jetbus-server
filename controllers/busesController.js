@@ -32,8 +32,13 @@ const postBus = async (request, response) => {
     }
 
 }
-const getBuses = () => {
-
+const getBuses = async(request,response) => {
+    try {
+        const buses=await Bus.find()
+        response.status(200).json(buses)
+    } catch (error) {
+        response.status(500).json({message:"Error getting Buses",error:error})
+    }
 }
 const getSeats = () => {
 
