@@ -16,22 +16,22 @@ const connnection=require('./db/connect')
 
 
 //Routes
-app.get('/',(request,response)=>{
+app.get('/api/v1/jetbus/',(request,response)=>{
     response.status(200).json("Hello Folks, Welcome to JetBus Server API")
 })
 
 
 const usersRouter=require('./routes/usersRouter')
-app.use('/api/v1/user',usersRouter)
+app.use('/api/v1/jetbus/user',usersRouter)
 
 const busesRouter=require('./routes/busesRouter')
-app.use('/api/v1/bus',busesRouter)
+app.use('/api/v1/jetbus/bus',busesRouter)
 
 const bookingsRouter=require('./routes/bookingsRouter')
-app.use('/api/v1/bookings',bookingsRouter)
+app.use('/api/v1/jetbus/bookings',bookingsRouter)
 
 const operatorsRouter=require('./routes/operatorsRouter')
-app.use('api/v1/operators',operatorsRouter)
+app.use('/api/v1/jetbus/operators',operatorsRouter)
 
 
 

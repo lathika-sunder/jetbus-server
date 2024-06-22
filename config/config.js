@@ -10,7 +10,7 @@ const configuration={
         uri:process.env.DB_URI,
     },
     jwt:{
-        secret_key:process.env.JWT_SECRET_KEY
+        secret_key:process.env.SECRET_KEY
     }
 }
 module.exports=configuration

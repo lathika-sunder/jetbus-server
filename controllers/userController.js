@@ -5,6 +5,7 @@ const hashPassword = require('../utils/hashPassword')
 const validatePassword = require('../utils/validatePassword')
 
 
+
 const getUsers = (request, response) => {
     try {
         response.status(200).json("User will be shown soon..")
@@ -52,18 +53,24 @@ const signupUser = async (request, response) => {
 const loginUser = async (request, response) => {
     const { email, password } = request.body
     
-
     try {
-        const userToBeLogged = await User.findOne(email)
+        const userToBeLogged = await User.findOne({email})
+        
         if (!userToBeLogged) {
             return response.status(401).json({ message: "User not found" })
         }
-        const isValidPassword=validatePassword(password, userToBeLogged.password)
+        const isValidPassword=await validatePassword(password, userToBeLogged.password)
+        
         if (!isValidPassword) {
-            return response.status(404).json({ message: "Login Failed" })
+            return response.status(404).json({ message: "Login Failed, Invalid Password" })
         }
+        
+        
         //cookie generation
-        const token = generateToken(id, email, userToBeLogged.role)
+        
+        const token =generateToken(userToBeLogged._id, email)
+        
+        console.log({email,password})
         const options = {
             maxAge: 20 * 60 * 1000,
             httpOnly: true,
@@ -74,7 +81,7 @@ const loginUser = async (request, response) => {
         response.status(201).json({ message: "Login Successful", token: token })
 
     } catch (error) {
-        response.status(500).json({ message: "Internal Server Error", error })
+        response.status(500).json({ message: "Internal Server Error", error:error})
     }
 
 }
