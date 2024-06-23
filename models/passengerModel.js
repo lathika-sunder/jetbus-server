@@ -1,22 +1,34 @@
-const mongoose=require('mongoose')
-const Schema=mongoose.Schema
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const passengerSchema=new Schema({
-    name:{
-        type:String,
+const passengerSchema = new Schema({
+    name: {
+        type: String,
+        required: true
     },
-    gender:{
-        type:String,
-        enum:["male","female"],
+    gender: {
+        type: String,
+        enum: ["male", "female", "non-binary", "prefer not to say"],
+        required: true
     },
-    age:{
-        type:Number,
+    dateOfBirth: {
+        type: Date,
+        required: true
     },
-    contact:{
-        type:Schema.Types.ObjectId,
-        ref:'PassengerContact'
+    email: {
+        type: String,
+        required: true
+    },
+    mobile: {
+        type: String,
+        required: true
+    },
+    bloodGroup: {
+        type: String,
+        enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+        required: true
     }
-})
+});
 
-const Passenger=mongoose.model('Passenger', passengerSchema)
-module.exports=Passenger
+const Passenger = mongoose.model('Passenger', passengerSchema);
+module.exports = Passenger;

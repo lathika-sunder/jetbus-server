@@ -135,7 +135,7 @@ const editUserDetails = async(request, response) => {
         await user.save()
         response.status(200).json({message:"Edit Details Successful",user:user})
     } catch (error) {
-        response.status(500).json({message:"Internal Server Error",error:error})
+        response.status(500).json({message:"Internal Server Error",error:error.message})
     }
 
 }
@@ -146,7 +146,7 @@ const getUserDetails = async(request, response) => {
        const user=await User.findById(id) 
        return response.status(200).json({message:"Get USer Details Successful", user:user})
     } catch (error) {
-        response.status(500).json({message:"Internal Server Error",error:error})
+        response.status(500).json({message:"Internal Server Error",error:error.message})
     }
 }
 

@@ -1,40 +1,54 @@
 const Booking = require("../models/bookingModel");
-const cron = require('node-cron');
 const Bus = require("../models/busModel");
-
-
-
+const Passenger = require("../models/passengerModel");
 
 const postBooking = async (request, response) => {
     const userId = request.user._id;
-    const {
-        boardingPoint,
-        endingPoint,
-        seats,
-        date,
-        passengers,
-        paymentStatus,
-        busId,
-    } = request.body;
 
-    const booking = new Booking({
-        boardingPoint,
-        endingPoint,
-        seats,
-        date,
-        passengers,
-        paymentStatus,
-        busId,
-        userId: userId,
-    })
+    // Store the passengers first which is an array of objects
+    const { passengers } = request.body;
+    const passengerIds = [];
 
     try {
-        await booking.save()
-        response.status(201).json({ message: "Booking Successful", booking: booking })
+        for (const passenger of passengers) {
+            const { name, gender, dateOfBirth, mobile, email, bloodGroup } = passenger;
+            const passengerToBeStored = new Passenger({ name, gender, dateOfBirth, mobile, email, bloodGroup });
+            const savedPassenger = await passengerToBeStored.save();
+            passengerIds.push(savedPassenger._id);
+        }
+
+        const {
+            boardingPoint,
+            endingPoint,
+            seats,
+            date,
+            paymentStatus,
+            busId,
+        } = request.body;
+
+        const booking = new Booking({
+            boardingPoint,
+            endingPoint,
+            seats,
+            date,
+            passengers:passengerIds,
+            paymentStatus,
+            busId,
+            userId,
+        });
+
+        await booking.save();
+        response.status(201).json({ message: "Booking Successful", booking });
     } catch (error) {
-        response.status(500).json({ message: "Internal Server Error", error: error })
+        if(error.name=="ValidationError")
+            {
+                response.status(400).json({message:error.message})
+            }
+        response.status(500).json({ message: "Internal Server Error", error });
+       
     }
-}
+};
+
 
 const getBookingsOfUser = async (request, response) => {
     const userId = request.user._id
@@ -89,19 +103,52 @@ const calculateBookingCost = async (request, response) => {
             }
         }
 
-        return response.status(200).json(totalBusPrice );
+        return response.status(200).json(totalBusPrice);
     } catch (error) {
         response.status(500).json({ message: "Internal Server Error", error: error.message });
     }
 };
 
-const cancelBooking=async(request,response)=>{
-    const bookingId=request.params
+const cancelBooking = async (request, response) => {
+    const bookingId = request.params
     try {
-        
+        const result = await Booking.deleteOne({ _id: bookingId })
+        response.status(201).json({ message: "Booking Cancelled Successfully" }, result)
     } catch (error) {
-        
+        response.status(500).json({ message: "Error Cancelling Bookings", error: error.message })
     }
 }
 
-module.exports = { postBooking, getBookingsOfUser, getBookingDetails, calculateBookingCost }
+const updateBooking = async (request, response) => {
+    const {
+        _id,
+        boardingPoint,
+        endingPoint,
+        seats,
+        date,
+        passengers,
+        paymentStatus,
+        busId,
+    } = request.body;
+
+    try {
+        const booking = await Booking.findById(_id)
+        booking = {
+            _id,
+            boardingPoint,
+            endingPoint,
+            seats,
+            date,
+            passengers,
+            paymentStatus,
+            busId,
+        }
+        await booking.save()
+
+        response.status(200).json({ message: "Update Successful", booking })
+    } catch (error) {
+        response.status(500).json({ message: "Internal Server Error", error: error.message })
+    }
+}
+
+module.exports = { postBooking, getBookingsOfUser, getBookingDetails, calculateBookingCost, cancelBooking, updateBooking }
