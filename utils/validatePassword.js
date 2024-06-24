@@ -1,6 +1,6 @@
-const bcrypt=require('bcryptjs')
+const bcryptjs=require('bcryptjs')
 const validatePassword=(enteredPassword,hashedPassword)=>{
-   const result= bcrypt.compareSync(enteredPassword,hashedPassword)
+   const result= bcryptjs.compareSync(enteredPassword,hashedPassword)
    return result;
 }
 

@@ -1,8 +1,8 @@
-const bcrypt = require('bcryptjs')
+const bcryptjs = require('bcryptjs')
 const hashPassword = (password) => {
     try {
-        const salt =bcrypt.genSaltSync(10)
-        const hashedPassword =bcrypt.hashSync(password, salt)
+        const salt =bcryptjs.genSaltSync(10)
+        const hashedPassword =bcryptjs.hashSync(password, salt)
         return hashedPassword
     } catch (error) {
         console.log("Error hashing Password",error)
