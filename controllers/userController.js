@@ -7,9 +7,10 @@ const BlackList = require('../models/blackListModel')
 
 
 
-const getUsers = (request, response) => {
+const getUsers = async(request, response) => {
+    const users=await User.find()
     try {
-        response.status(200).json("User will be shown soon..")
+        response.status(200).json(users)
     } catch (error) {
         console.log("Error getting Users", error)
     }

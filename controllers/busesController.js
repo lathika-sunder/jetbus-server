@@ -89,9 +89,19 @@ const getBusDetails =async (request,response) => {
     }
 }
 
+const getAllBuses=async(request,response)=>{
+    try {
+        const buses=await Bus.find()
+        response.status(200).json(buses)
+    } catch (error) {
+        response.status(500).json({message:"Internal Server Error",error:error.message})
+    }
+}
+
 module.exports = {
     getBuses,
     getSeats,
     postBus,
+    getAllBuses,
     getBusDetails
 }

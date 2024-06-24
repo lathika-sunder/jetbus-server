@@ -151,4 +151,13 @@ const updateBooking = async (request, response) => {
     }
 }
 
-module.exports = { postBooking, getBookingsOfUser, getBookingDetails, calculateBookingCost, cancelBooking, updateBooking }
+const getAllBookings=async(request,response)=>{
+    try {
+        const bookings=await Booking.find()
+        response.status(200).json(bookings)
+    } catch (error) {
+        response.status(500).json({message:error.message})
+    }
+}
+
+module.exports = { postBooking, getBookingsOfUser, getBookingDetails, calculateBookingCost, cancelBooking, updateBooking,getAllBookings }
