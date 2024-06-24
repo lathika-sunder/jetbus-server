@@ -1,9 +1,14 @@
 
-const { deleteInitiatedOrdersOlderThan10Minutes } = require('./deleteService');
+const Booking = require('../models/bookingModel');
 const cronInitiatedOrders= async (req, res) => {
    
     try {
-        await deleteInitiatedOrdersOlderThan10Minutes();
+        const thresholdTime = new Date(Date.now() - 10 * 60 * 1000); 
+        await Booking.deleteMany({
+            paymentStatus: 'initiated',
+            createdAt: { $lt: thresholdTime }
+        });
+        console.log('Deleted initiated orders older than 10 minutes');
         res.status(200).send('Cron job executed successfully');
     } catch (error) {
         res.status(500).send('Error executing cron job');

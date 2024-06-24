@@ -3,6 +3,7 @@ const app=express()
 const config=require('./config/config')
 const cors=require('cors')
 const cookieParser=require('cookie-parser')
+const router=express.Router()
 
 
 //middlewares
@@ -35,8 +36,8 @@ app.use('/api/v1/jetbus/booking',bookingsRouter)
 
 
 //cron initiated bookings
-const cronRouter = require('./routes/cronRouter')
-app.use('/api/v1/jetbus/cron',cronRouter)
+const cronInitiatedOrders = require('./services/cronInitiatedOrders')
+app.use('/api/v1/jetbus/cron',router.get('/',cronInitiatedOrders))
 
 app.listen(config.app.port,(request,response)=>{
     console.log(`App listening on http://localhost:${config.app.port}`)
