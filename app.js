@@ -32,7 +32,9 @@ const bookingsRouter=require('./routes/bookingsRouter')
 app.use('/api/v1/jetbus/booking',bookingsRouter)
 
 
-
+app.get('/',(request,response)=>{
+    response.status(200).json({message:"Hey welcome to Jetbus Api"})
+})
 
 
 //cron initiated bookings
@@ -42,3 +44,4 @@ app.use('/api/v1/jetbus/cron',router.get('/',cronInitiatedOrders))
 app.listen(config.app.port,(request,response)=>{
     console.log(`App listening on http://localhost:${config.app.port}`)
 })
+
