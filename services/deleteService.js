@@ -3,7 +3,7 @@ const Booking = require("../models/bookingModel");
 
 async function deleteInitiatedOrdersOlderThan10Minutes() {
     try {
-        const thresholdTime = new Date(Date.now() - 10 * 60 * 1000); // 10 minutes ago
+        const thresholdTime = new Date(Date.now() - 10 * 60 * 1000); 
         await Booking.deleteMany({
             paymentStatus: 'initiated',
             createdAt: { $lt: thresholdTime }
