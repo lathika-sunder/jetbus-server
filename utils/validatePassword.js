@@ -1,6 +1,6 @@
-const bcrypt=require('bcrypt')
-const validatePassword=async(enteredPassword,hashedPassword)=>{
-   const result= await bcrypt.compare(enteredPassword,hashedPassword)
+const bcrypt=require('bcryptjs')
+const validatePassword=(enteredPassword,hashedPassword)=>{
+   const result= bcrypt.compareSync(enteredPassword,hashedPassword)
    return result;
 }
 
