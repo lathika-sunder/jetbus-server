@@ -1,6 +1,3 @@
-Sure! Here is a comprehensive GitHub README for your JetBus API:
-
----
 
 # JetBus API
 
