@@ -38,7 +38,7 @@ app.get('/',(request,response)=>{
 
 
 //cron initiated bookings
-const cronInitiatedOrders = require('./services/cronInitiatedOrders')
+const cronInitiatedOrders = require('./utils/cronInitiatedOrders')
 app.use('/api/v1/jetbus/cron',router.get('/',cronInitiatedOrders))
 
 app.listen(config.app.port,(request,response)=>{
